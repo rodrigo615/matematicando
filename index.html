@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Jogo Matematicando</title>
+<style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #fdf6e3; }
+    h1 { color: #2c3e50; }
+    .expression { font-size: 28px; margin: 20px 0; font-weight: bold; }
+    input[type="number"] { font-size: 20px; padding: 5px; width: 120px; text-align: center; }
+    button { font-size: 18px; padding: 10px 20px; margin: 10px; cursor: pointer; border-radius: 5px; border: none; background-color: #3498db; color: white; transition: background-color 0.3s; }
+    button:hover { background-color: #2980b9; }
+    .feedback { font-size: 22px; margin: 15px 0; font-weight: bold; }
+    .score { font-size: 20px; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Jogo Matematicando</h1>
+<div class="expression" id="expression">Clique em "Próxima" para começar!</div>
+<input type="number" id="answer" placeholder="Sua resposta">
+<br>
+<button onclick="checkAnswer()">Verificar</button>
+<button onclick="nextExpression()">Próxima</button>
+<div class="feedback" id="feedback"></div>
+<div class="score" id="score">Pontuação: 0</div>
+
+<script>
+const expressions = [
+  { expr: "2³ + 15 – 7", result: 16 },
+  { expr: "89 × 6 + 6", result: 540 },
+  { expr: "64 – 4 × 16", result: 0 },
+  { expr: "5 × √169 + 35", result: 100 },
+  { expr: "2⁴ + 9", result: 25 },
+  { expr: "99 × 11 – 990", result: 99 },
+  { expr: "9 × 12 ÷ 6", result: 18 },
+  { expr: "14 × 5 – 60", result: 10 },
+  { expr: "5² – √81", result: 16 },
+  { expr: "11 × 3 + 7", result: 40 },
+  { expr: "120 ÷ 6 × 2", result: 40 },
+  { expr: "6² – 5 × 6", result: 6 },
+  { expr: "11 × 7 – 70", result: 7 },
+  { expr: "50 – 2² × 6", result: 26 },
+  { expr: "7 × 7 – √49", result: 42 },
+  { expr: "90 ÷ 9 + 3²", result: 19 },
+  { expr: "8² – 40 ÷ 5", result: 56 },
+  { expr: "33 × 3 – 99", result: 0 },
+  { expr: "9² ÷ 9 + 8", result: 17 },
+  { expr: "73 × 7 – 21", result: 490 },
+  { expr: "72 ÷ 8 + 2³", result: 17 },
+  { expr: "√225 – 7 × 2", result: 1 },
+  { expr: "12 × 6 ÷ 4", result: 18 },
+  { expr: "4³ + √16", result: 68 },
+  { expr: "200 ÷ 10 – 4²", result: 4 },
+  { expr: "3³ + 24 ÷ 6", result: 31 },
+  { expr: "45 – 2² × 5", result: 25 },
+  { expr: "√(√(16²) + 9)", result: 5 },
+  { expr: "64 ÷ 8 + 2", result: 10 },
+  { expr: "10 × 3 – ∛27", result: 27 },
+  { expr: "4² ÷ 4 + 4", result: 8 },
+  { expr: "3² × 2² + 4", result: 40 },
+  { expr: "5³ – 5 × 3", result: 110 },
+  { expr: "7³ ÷ 7 – 30", result: 19 },
+  { expr: "√(3² × 4²) + 18", result: 30 },
+  { expr: "14 × 6 + 7", result: 91 },
+  { expr: "8² – 11 × 5", result: 9 },
+  { expr: "∛(√100 + √81 + √64)", result: 3 },
+  { expr: "72 ÷ 12 + 5²", result: 31 },
+  { expr: "23 × 7 – 3 × 7", result: 140 },
+  { expr: "49 – 3² × 5", result: 4 },
+  { expr: "120 ÷ 6 + 2³", result: 28 },
+  { expr: "20 + 6 × 5", result: 50 },
+  { expr: "20 × 3 – 3³", result: 33 },
+  { expr: "(4³ ÷ 4²)² + 4", result: 20 },
+  { expr: "99 ÷ 9 + 9", result: 20 },
+  { expr: "4² – 30 ÷ 6", result: 11 },
+  { expr: "40 × 2 ÷ 8", result: 10 },
+  { expr: "10² – 8 × 7", result: 44 },
+  { expr: "144 ÷ 12 + 3²", result: 21 }
+];
+
+let currentExpression = {};
+let score = 0;
+
+function nextExpression() {
+    const randomIndex = Math.floor(Math.random() * expressions.length);
+    currentExpression = expressions[randomIndex];
+    document.getElementById("expression").innerText = currentExpression.expr;
+    document.getElementById("answer").value = "";
+    document.getElementById("feedback").innerText = "";
+    document.getElementById("feedback").style.color = "black";
+}
+
+function checkAnswer() {
+    const answer = Number(document.getElementById("answer").value);
+    const feedbackEl = document.getElementById("feedback");
+    if (answer === currentExpression.result) {
+        feedbackEl.innerText = "Correto! 🎉";
+        feedbackEl.style.color = "green";
+        score++;
+    } else {
+        feedbackEl.innerText = "Errado 😢. Resposta certa: " + currentExpression.result;
+        feedbackEl.style.color = "red";
+    }
+    document.getElementById("score").innerText = "Pontuação: " + score;
+}
+</script>
+
+</body>
+</html>
