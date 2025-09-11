@@ -36,7 +36,7 @@ const expressions = [
   { expr: "Q7: 9 × 12 ÷ 6", result: 18 },
   { expr: "Q8: 14 × 5 – 60", result: 10 },
   { expr: "Q9: 5² – √81", result: 16 },
-  { expr: "Q10: 11 × 3 + 7", result: 40 },
+  { expr: "Q10: 11 × 3 + 47", result: 80 },
   { expr: "Q11: 120 ÷ 6 × 2", result: 40 },
   { expr: "Q12: 6² – 5 × 6", result: 6 },
   { expr: "Q13: 11 × 7 – 70", result: 7 },
@@ -79,33 +79,66 @@ const expressions = [
   { expr: "Q50: 144 ÷ 12 + 3²", result: 21 }
 ];
 
+let availableExpressions = [...expressions];
 let currentExpression = {};
 let score = 0;
+let alreadyAnswered = false; // evita contar mais de uma vez
 
 function nextExpression() {
-    const randomIndex = Math.floor(Math.random() * expressions.length);
-    currentExpression = expressions[randomIndex];
+    const feedbackEl = document.getElementById("feedback");
+
+    // se ainda não respondeu a questão atual → conta como pulo/erro
+    if (currentExpression.expr && !alreadyAnswered) {
+        feedbackEl.innerText = "Você não respondeu a questão 😢. Pontuação zerada!";
+        feedbackEl.style.color = "red";
+        score = 0;
+        availableExpressions = [...expressions];
+        document.getElementById("score").innerText = "Pontuação: " + score;
+    }
+
+    if (availableExpressions.length === 0) {
+        availableExpressions = [...expressions];
+    }
+
+    const randomIndex = Math.floor(Math.random() * availableExpressions.length);
+    currentExpression = availableExpressions.splice(randomIndex, 1)[0];
+
     document.getElementById("expression").innerText = currentExpression.expr;
     document.getElementById("answer").value = "";
-    document.getElementById("feedback").innerText = "";
-    document.getElementById("feedback").style.color = "black";
+    feedbackEl.innerText = "";
+    feedbackEl.style.color = "black";
+
+    alreadyAnswered = false; // precisa responder novamente
 }
 
 function checkAnswer() {
+    if (alreadyAnswered) return; // não conta mais de uma vez
+
     const answer = Number(document.getElementById("answer").value);
     const feedbackEl = document.getElementById("feedback");
+
     if (answer === currentExpression.result) {
+        score++;
         feedbackEl.innerText = "Correto! 🎉";
         feedbackEl.style.color = "green";
-        score++;
+
+        if (score === expressions.length) {
+            feedbackEl.innerText = "🎊 Parabéns! Você acertou todas as " + expressions.length + " questões! 🎊";
+            availableExpressions = [...expressions];
+            score = 0;
+        }
+
     } else {
         feedbackEl.innerText = "Errado 😢. Resposta certa: " + currentExpression.result;
         feedbackEl.style.color = "red";
+        score = 0;
+        availableExpressions = [...expressions];
     }
+
     document.getElementById("score").innerText = "Pontuação: " + score;
+    alreadyAnswered = true; // trava para não contar de novo
 }
 </script>
 
 </body>
 </html>
-
