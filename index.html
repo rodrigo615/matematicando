@@ -2,16 +2,80 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jogo Matematicando</title>
 <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #fdf6e3; }
-    h1 { color: #2c3e50; }
-    .expression { font-size: 28px; margin: 20px 0; font-weight: bold; }
-    input[type="number"] { font-size: 20px; padding: 5px; width: 120px; text-align: center; }
-    button { font-size: 18px; padding: 10px 20px; margin: 10px; cursor: pointer; border-radius: 5px; border: none; background-color: #3498db; color: white; transition: background-color 0.3s; }
+    body { 
+        font-family: Arial, sans-serif; 
+        text-align: center; 
+        padding: 5vw; 
+        background: #fdf6e3; 
+        max-width: 800px; 
+        margin: auto; 
+    }
+
+    h1 { 
+        color: #2c3e50; 
+        font-size: 6vw; 
+    }
+
+    .expression { 
+        font-size: 5vw; 
+        margin: 5vw 0; 
+        font-weight: bold; 
+    }
+
+    input[type="number"] { 
+        font-size: 4.5vw; 
+        padding: 2vw; 
+        width: 60%; 
+        max-width: 250px; 
+        text-align: center; 
+    }
+
+    button { 
+        font-size: 4vw; 
+        padding: 2vw 5vw; 
+        margin: 2vw; 
+        cursor: pointer; 
+        border-radius: 1vw; 
+        border: none; 
+        background-color: #3498db; 
+        color: white; 
+        transition: background-color 0.3s; 
+    }
+
     button:hover { background-color: #2980b9; }
-    .feedback { font-size: 22px; margin: 15px 0; font-weight: bold; }
-    .score { font-size: 20px; margin-top: 20px; }
+
+    .feedback { 
+        font-size: 4.5vw; 
+        margin: 3vw 0; 
+        font-weight: bold; 
+    }
+
+    .score { 
+        font-size: 4vw; 
+        margin-top: 3vw; 
+    }
+
+    /* Ajustes para celulares pequenos */
+    @media (max-width: 600px) {
+        h1 { font-size: 8vw; }
+        .expression { font-size: 6.5vw; }
+        input, button { font-size: 5.5vw; width: 80%; }
+        .feedback { font-size: 6vw; }
+        .score { font-size: 5vw; }
+    }
+
+    /* Ajustes para telas grandes (PCs) */
+    @media (min-width: 1024px) {
+        h1 { font-size: 40px; }
+        .expression { font-size: 32px; }
+        input[type="number"] { font-size: 22px; }
+        button { font-size: 20px; padding: 12px 24px; }
+        .feedback { font-size: 24px; }
+        .score { font-size: 22px; }
+    }
 </style>
 </head>
 <body>
