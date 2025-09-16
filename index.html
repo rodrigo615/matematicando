@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jogo Matematicando</title>
+<title>Jogo do Matematicando</title>
 <style>
     body { 
         font-family: Arial, sans-serif; 
@@ -33,10 +33,17 @@
         text-align: center; 
     }
 
+    .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 3vw;
+        flex-wrap: wrap; /* se a tela for muito estreita, um botão quebra pra baixo */
+        margin-top: 3vw;
+    }
+
     button { 
         font-size: 4vw; 
         padding: 2vw 5vw; 
-        margin: 2vw; 
         cursor: pointer; 
         border-radius: 1vw; 
         border: none; 
@@ -58,21 +65,12 @@
         margin-top: 3vw; 
     }
 
-    /* Ajustes para celulares pequenos */
-    @media (max-width: 600px) {
-        h1 { font-size: 8vw; }
-        .expression { font-size: 6.5vw; }
-        input, button { font-size: 5.5vw; width: 80%; }
-        .feedback { font-size: 6vw; }
-        .score { font-size: 5vw; }
-    }
-
     /* Ajustes para telas grandes (PCs) */
     @media (min-width: 1024px) {
         h1 { font-size: 40px; }
         .expression { font-size: 32px; }
         input[type="number"] { font-size: 22px; }
-        button { font-size: 20px; padding: 12px 24px; }
+        button { font-size: 20px; padding: 12px 24px; border-radius: 6px; }
         .feedback { font-size: 24px; }
         .score { font-size: 22px; }
     }
@@ -83,9 +81,12 @@
 <h1>Jogo Matematicando</h1>
 <div class="expression" id="expression">Clique em "Próxima" para começar!</div>
 <input type="number" id="answer" placeholder="Sua resposta">
-<br>
-<button onclick="checkAnswer()">Verificar</button>
-<button onclick="nextExpression()">Próxima</button>
+
+<div class="buttons">
+  <button onclick="checkAnswer()">Verificar</button>
+  <button onclick="nextExpression()">Próxima</button>
+</div>
+
 <div class="feedback" id="feedback"></div>
 <div class="score" id="score">Pontuação: 0</div>
 
