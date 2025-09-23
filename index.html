@@ -37,7 +37,7 @@
         display: flex;
         justify-content: center;
         gap: 3vw;
-        flex-wrap: wrap; /* se a tela for muito estreita, um botão quebra pra baixo */
+        flex-wrap: wrap;
         margin-top: 3vw;
     }
 
@@ -65,7 +65,6 @@
         margin-top: 3vw; 
     }
 
-    /* Ajustes para telas grandes (PCs) */
     @media (min-width: 1024px) {
         h1 { font-size: 40px; }
         .expression { font-size: 32px; }
@@ -147,12 +146,25 @@ const expressions = [
 let availableExpressions = [...expressions];
 let currentExpression = {};
 let score = 0;
-let alreadyAnswered = false; // evita contar mais de uma vez
+let alreadyAnswered = false; 
+
+// Gera o código
+function gerarCodigo10Digitos() {
+    const n = Math.floor(Math.random() * 1000000); // 6 dígitos aleatórios
+    const s6 = n.toString().padStart(6, '0');
+    const a = parseInt(s6.slice(0,3));
+    const b = parseInt(s6.slice(3,6));
+    const rTotal = a*487 + b*727;
+    const resto = rTotal % 9929;
+    const sqrtR = Math.sqrt(resto);
+    const parteDecimal = sqrtR - Math.floor(sqrtR);
+    const quatro = Math.floor(parteDecimal * 10000).toString().padStart(4,'0');
+    return s6 + quatro;
+}
 
 function nextExpression() {
     const feedbackEl = document.getElementById("feedback");
 
-    // se ainda não respondeu a questão atual → conta como pulo/erro
     if (currentExpression.expr && !alreadyAnswered) {
         feedbackEl.innerText = "Você não respondeu a questão 😢. Pontuação zerada!";
         feedbackEl.style.color = "red";
@@ -173,11 +185,11 @@ function nextExpression() {
     feedbackEl.innerText = "";
     feedbackEl.style.color = "black";
 
-    alreadyAnswered = false; // precisa responder novamente
+    alreadyAnswered = false; 
 }
 
 function checkAnswer() {
-    if (alreadyAnswered) return; // não conta mais de uma vez
+    if (alreadyAnswered) return;
 
     const answer = Number(document.getElementById("answer").value);
     const feedbackEl = document.getElementById("feedback");
@@ -188,7 +200,8 @@ function checkAnswer() {
         feedbackEl.style.color = "green";
 
         if (score === expressions.length) {
-            feedbackEl.innerText = "🎊 Parabéns! Você acertou todas as " + expressions.length + " questões! 🎊";
+            const codigo = gerarCodigo10Digitos();
+            feedbackEl.innerText = "🎊 Parabéns! Você acertou todas as " + expressions.length + " questões! 🎊\nCopie o código " + codigo + " que vale 0,5 ponto para a próxima prova.";
             availableExpressions = [...expressions];
             score = 0;
         }
@@ -201,10 +214,11 @@ function checkAnswer() {
     }
 
     document.getElementById("score").innerText = "Pontuação: " + score;
-    alreadyAnswered = true; // trava para não contar de novo
+    alreadyAnswered = true; 
 }
 </script>
 
 </body>
 </html>
+
 
